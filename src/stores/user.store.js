@@ -5,7 +5,7 @@ import React from "react";
 import { runInAction, makeAutoObservable } from "mobx"
 import EventBus from "../lib/EventBus"
 import vestaStore from "./vesta.store"
-import {walletTypes, getMetaMask, getWalletConnect} from "../wallets/Wallets"
+import {walletTypes, getMetaMask, getWalletConnect, getTally} from "../wallets/Wallets"
 
 const chainIdMap = {
     1: "mainnet",
@@ -82,6 +82,8 @@ class UserStore {
                 wallet = await getMetaMask(newConnection)
             } else if (this.walletType === walletTypes.WALLET_CONNECT){
                 wallet = await getWalletConnect(newConnection)
+            } else if (this.walletType === walletTypes.TALLY){
+                wallet = await getTally(newConnection)
             }
             this.web3 = wallet.web3
             this.provider = wallet.provider
